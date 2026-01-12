@@ -42,16 +42,7 @@ This extension uses [Ethereum Identity Kit (EIK)](https://ethidentitykit.com) co
 
 ### Enable L2 Networks (Recommended)
 
-EFP transactions happen on L2s (Base, Optimism). To enable chain switching in the transaction modal, add these networks to your `scaffold.config.ts`:
-
-```typescript
-import * as chains from "viem/chains";
-
-const scaffoldConfig = {
-  targetNetworks: [chains.mainnet, chains.base, chains.optimism],
-  // ... rest of config
-};
-```
+EFP transactions happen on L2s (Base, Optimism). This networks are already available in `scaffold.config.ts#targetNetworks`. You can remove local chain before pushing to production.
 
 ### Dark Mode
 
@@ -62,17 +53,21 @@ Components automatically detect dark mode from the SE-2 theme. You can also pass
 ### Basic Profile Card
 
 ```tsx
-import { ProfileCard, TransactionProvider, TransactionModal } from "ethereum-identity-kit";
+import {
+  ProfileCard,
+  TransactionProvider,
+  TransactionModal,
+} from "ethereum-identity-kit";
 import "ethereum-identity-kit/css";
 
 export default function MyPage() {
   return (
     <TransactionProvider>
       <TransactionModal />
-      <ProfileCard 
-        addressOrName="vitalik.eth" 
-        showFollowerState 
-        showFollowButton 
+      <ProfileCard
+        addressOrName="vitalik.eth"
+        showFollowerState
+        showFollowButton
       />
     </TransactionProvider>
   );
@@ -82,16 +77,20 @@ export default function MyPage() {
 ### Follow Button
 
 ```tsx
-import { FollowButton, TransactionProvider, TransactionModal } from "ethereum-identity-kit";
+import {
+  FollowButton,
+  TransactionProvider,
+  TransactionModal,
+} from "ethereum-identity-kit";
 import { useAccount } from "wagmi";
 
 export default function MyPage() {
   const { address } = useAccount();
-  
+
   return (
     <TransactionProvider>
       <TransactionModal />
-      <FollowButton 
+      <FollowButton
         lookupAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
         connectedAddress={address}
       />
@@ -106,12 +105,12 @@ export default function MyPage() {
 import { useProfileStats, useFollowerState } from "ethereum-identity-kit";
 
 export default function Stats({ address }) {
-  const { followers, following, statsLoading } = useProfileStats({ 
-    addressOrName: address 
+  const { followers, following, statsLoading } = useProfileStats({
+    addressOrName: address,
   });
-  
+
   if (statsLoading) return <span>Loading...</span>;
-  
+
   return (
     <div>
       <span>{followers} followers</span>
@@ -139,6 +138,7 @@ export default function Stats({ address }) {
 ## Self-Hosting
 
 For full control, you can self-host the EFP infrastructure stack:
+
 - [Railway 1-Click Deploy](https://railway.app/template/pDGEZm)
 - [Infrastructure Docs](https://ethidentitykit.com/docs/services/infra)
 
